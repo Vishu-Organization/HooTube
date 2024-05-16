@@ -27,7 +27,6 @@ function App() {
               <VideoGridItem key={video.id} {...video} />
             ))}
           </div>
-          S
         </div>
       </div>
     </div>
