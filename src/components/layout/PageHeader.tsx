@@ -2,25 +2,13 @@ import { Menu, Video, Bell, User2, Mic, Search, ArrowLeft } from "lucide-react";
 import logo from "../../assets/FullLogo_NoBuffer.png";
 import { Button } from "../Button";
 import { useState } from "react";
+import { useSidebarContext } from "../../context/SidebarContext";
 
 export const PageHeader = () => {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
-
-  console.log(showFullWidthSearch);
-
   return (
     <nav className="flex gap-10 lg:gap-20 justify-between pt-2 mx-4 mb-6">
-      <section
-        className={`items-center gap-4 flex-shrink-0 ${
-          showFullWidthSearch ? "hidden" : "flex"
-        }`}>
-        <Button variant="ghost" size="icon">
-          <Menu />
-        </Button>
-        <a href="/">
-          <img src={logo} className="w-[4.5rem] h-[1.5rem]" />
-        </a>
-      </section>
+      <PageHeaderIconSection hidden={showFullWidthSearch} />
       <form
         className={`gap-4 flex-grow justify-center ${
           showFullWidthSearch ? "flex" : "hidden md:flex"
@@ -74,5 +62,27 @@ export const PageHeader = () => {
         </Button>
       </section>
     </nav>
+  );
+};
+
+export const PageHeaderIconSection = ({
+  hidden = false,
+}: {
+  hidden?: boolean;
+}) => {
+  const { toggle } = useSidebarContext();
+
+  return (
+    <section
+      className={`items-center gap-4 flex-shrink-0 ${
+        hidden ? "hidden" : "flex"
+      }`}>
+      <Button onClick={toggle} variant="ghost" size="icon">
+        <Menu />
+      </Button>
+      <a href="/">
+        <img src={logo} className="w-[4.5rem] h-[1.5rem]" />
+      </a>
+    </section>
   );
 };

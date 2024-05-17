@@ -25,11 +25,18 @@ import {
   Trophy,
 } from "lucide-react";
 import { playlists, subscriptions } from "../../data/sidebar";
+import { useSidebarContext } from "../../context/SidebarContext";
+import { PageHeaderIconSection } from "./PageHeader";
 
 const SideBar = () => {
+  const { isLargeOpen, isSmallOpen, close } = useSidebarContext();
+
   return (
     <>
-      <aside className="sticky top-0 overflow-y-auto overflow-hidden  pb-4 flex flex-col ml-1 lg:hidden">
+      <aside
+        className={`sticky top-0 overflow-y-auto overflow-hidden  pb-4 flex flex-col ml-1 ${
+          isLargeOpen ? "lg:hidden" : "lg:flex"
+        }`}>
         <SmallSidebarItem IconOrImageUrl={Home} title="Home" url="/" />
         <SmallSidebarItem
           IconOrImageUrl={Repeat}
@@ -47,7 +54,19 @@ const SideBar = () => {
           url="/library"
         />
       </aside>
-      <aside className="w-56 lg:sticky absolute top-0 overflow-y-auto overflow-hidden pb-4 lg:flex hidden flex-col gap-2 px-2">
+      {isSmallOpen && (
+        <div
+          onClick={close}
+          className="lg:hidden fixed inset-0 z-[999] bg-secondary-dark opacity-50"
+        />
+      )}
+      <aside
+        className={`w-56 lg:sticky absolute top-0 overflow-y-auto overflow-hidden pb-4 flex-col gap-2 px-2 ${
+          isLargeOpen ? "lg:flex" : "lg:hidden"
+        } ${isSmallOpen ? "flex z-[999] bg-white max-h-screen" : "hidden"}`}>
+        <div className="lg:hidden pt-2 pb-4 px-2 sticky top-0 bg-white">
+          <PageHeaderIconSection />
+        </div>
         <LargeSidebarSection>
           <LargeSidebarItem
             isActive
